@@ -82,8 +82,7 @@ public class Lluvia {
 	  return true; 
    }
    
-   public void actualizarDibujoLluvia(SpriteBatch batch) { 
-	   
+   public void actualizarDibujoLluvia(SpriteBatch batch) {
 	  for (int i=0; i < rainDropsPos.size; i++ ) {
 		  Rectangle raindrop = rainDropsPos.get(i);
 		  if(rainDropsType.get(i)==1) // gota dañina
