@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -8,11 +9,14 @@ public class GotaMala implements Gota {
 
     private Texture textura;
     private Rectangle area;
+    private MovimientoStrategy movimiento;
 
-    public GotaMala(Texture textura, float x) {
+    public GotaMala(Texture textura, float x, MovimientoStrategy movimientoInicial) {
         this.textura = textura;
         this.area = new Rectangle(x, 480, 64, 64);
+        this.movimiento = movimientoInicial;
     }
+
 
     @Override
     public void actualizar(float delta) {
@@ -21,7 +25,7 @@ public class GotaMala implements Gota {
 
     @Override
     public void dibujar(SpriteBatch batch) {
-        batch.draw(textura, area.x, area.y);
+        batch.draw(textura, area.x, area.y,96,96);
     }
 
     @Override

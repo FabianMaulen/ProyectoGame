@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class Lluvia {
     private Array<Gota> gotas;
-
     private long lastDropTime;
 
     private Texture texturaGotaBuena;
@@ -34,36 +33,45 @@ public class Lluvia {
         rainMusic.play();
     }
 
-    // 3. MÉTODO MODIFICADO
     private void crearGotaDeLluvia() {
         float x = MathUtils.random(0, 800 - 64);
+
+        // Elegimos una estrategia de movimiento aleatoria
+        MovimientoStrategy estrategia;
+        int tipo = MathUtils.random(0, 3); // 0 a 3 → cuatro tipos de movimiento
+        switch (tipo) {
+            case 0: estrategia = new MovimientoVertical(); break;
+            case 1: estrategia = new MovimientoDiagonal(); break;
+            case 2: estrategia = new MovimientoZigZag(); break;
+            default: estrategia = new MovimientoAcelerado(); break;
+        }
+
         if (MathUtils.random(1, 10) < 5) {
-            gotas.add(new GotaMala(texturaGotaMala, x));
+            // Gota mala (puedes modificarla igual que GotaBuena para usar Strategy)
+            gotas.add(new GotaMala(texturaGotaMala, x, estrategia));
         } else {
-            gotas.add(new GotaBuena(texturaGotaBuena, dropSound, x));
+            // Gota buena con estrategia
+            gotas.add(new GotaBuena(texturaGotaBuena, dropSound, x, estrategia));
         }
 
         lastDropTime = TimeUtils.nanoTime();
     }
 
     public boolean actualizarMovimiento(Tarro tarro) {
-        if(TimeUtils.nanoTime() - lastDropTime > 100000000) crearGotaDeLluvia();
+        if (TimeUtils.nanoTime() - lastDropTime > 100000000) crearGotaDeLluvia();
 
         for (int i = gotas.size - 1; i >= 0; i--) {
             Gota gota = gotas.get(i);
-
             gota.actualizar(Gdx.graphics.getDeltaTime());
 
-            if(gota.estaFueraDePantalla()) {
+            if (gota.estaFueraDePantalla()) {
                 gotas.removeIndex(i);
-                continue; // Pasa a la siguiente gota
+                continue;
             }
 
-            if(gota.getArea().overlaps(tarro.getArea())) {
-
+            if (gota.getArea().overlaps(tarro.getArea())) {
                 boolean juegoContinua = gota.alColisionar(tarro);
-
-                gotas.removeIndex(i); // Eliminamos la gota
+                gotas.removeIndex(i);
 
                 if (!juegoContinua) {
                     return false;
@@ -83,11 +91,12 @@ public class Lluvia {
         dropSound.dispose();
         rainMusic.dispose();
     }
+
     public void pausar() {
         rainMusic.stop();
     }
+
     public void continuar() {
         rainMusic.play();
     }
-
 }
