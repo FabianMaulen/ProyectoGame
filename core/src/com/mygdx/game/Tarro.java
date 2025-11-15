@@ -54,8 +54,6 @@ public class Tarro {
 		      bucket.height = 64;
 	   }
 	   public void dañar() {
-           //vidas--;
-		  GameSessionManager.getInstance().perderVida();
 		  herido = true;
 		  tiempoHerido=tiempoHeridoMax;
 		  sonidoHerido.play();
