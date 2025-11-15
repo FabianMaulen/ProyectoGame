@@ -46,7 +46,7 @@ public class GameScreen extends PantallaBase {
 
         batch.begin();
         font.draw(batch, "Gotas totales: " + GameSessionManager.getInstance().getPuntos(), 5, 475);
-        font.draw(batch, "Vidas : " + tarro.getVidas(), 670, 475);
+        font.draw(batch, "Vidas : " + GameSessionManager.getInstance().getVidas(), 670, 475);
         font.draw(batch, "HighScore : " + juego.getHigherScore(), camara.viewportWidth / 2 - 50, 475);
 
         if (!tarro.estaHerido()) {
