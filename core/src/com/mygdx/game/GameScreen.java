@@ -45,15 +45,15 @@ public class GameScreen extends PantallaBase {
         batch.setProjectionMatrix(camara.combined);
 
         batch.begin();
-        font.draw(batch, "Gotas totales: " + tarro.getPuntos(), 5, 475);
+        font.draw(batch, "Gotas totales: " + GameSessionManager.getInstance().getPuntos(), 5, 475);
         font.draw(batch, "Vidas : " + tarro.getVidas(), 670, 475);
         font.draw(batch, "HighScore : " + juego.getHigherScore(), camara.viewportWidth / 2 - 50, 475);
 
         if (!tarro.estaHerido()) {
             tarro.actualizarMovimiento();
             if (!lluvia.actualizarMovimiento(tarro)) {
-                if (juego.getHigherScore() < tarro.getPuntos())
-                    juego.setHigherScore(tarro.getPuntos());
+                if (juego.getHigherScore() < GameSessionManager.getInstance().getPuntos())
+                    juego.setHigherScore(GameSessionManager.getInstance().getPuntos());
                 juego.setScreen(new GameOverScreen(juego));
                 dispose();
             }
