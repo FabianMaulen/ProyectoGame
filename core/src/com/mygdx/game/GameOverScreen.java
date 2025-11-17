@@ -33,6 +33,7 @@ public class GameOverScreen extends PantallaBase {
         batch.end();
 
         if (Gdx.input.isTouched()) {
+            GameSessionManager.getInstance().ResetSession();
             juego.setScreen(new GameScreen(juego));
             dispose();
         }

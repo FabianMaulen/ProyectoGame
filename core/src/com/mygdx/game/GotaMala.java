@@ -40,7 +40,12 @@ public class GotaMala implements Gota {
 
     @Override
     public boolean alColisionar(Tarro tarro) {
-        tarro.dañar();
-        return tarro.getVidas() > 0;
+        //tarro.dañar();
+        boolean juegoContinua = !GameSessionManager.getInstance().perderVida();
+
+        if(juegoContinua){
+            tarro.dañar();
+        }
+        return juegoContinua;
     }
 }

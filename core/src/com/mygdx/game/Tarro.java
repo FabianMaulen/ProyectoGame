@@ -13,8 +13,8 @@ public class Tarro {
 	   private Rectangle bucket;
 	   private Texture bucketImage;
 	   private Sound sonidoHerido;
-	   private int vidas = 3;
-	   private int puntos = 0;
+	   //private int vidas = 3;
+	   //private int puntos = 0;
 	   private int velx = 400;
 	   private boolean herido = false;
 	   private int tiempoHeridoMax=50;
@@ -25,7 +25,8 @@ public class Tarro {
 		   bucketImage = tex;
 		   sonidoHerido = ss;
 	   }
-	   
+
+       /*
 		public int getVidas() {
 			return vidas;
 		}
@@ -33,12 +34,16 @@ public class Tarro {
 		public int getPuntos() {
 			return puntos;
 		}
+		*/
+
 		public Rectangle getArea() {
 			return bucket;
 		}
+        /*
 		public void sumarPuntos(int pp) {
 			puntos+=pp;
 		}
+		*/
 		
 	
 	   public void crear() {
@@ -49,11 +54,11 @@ public class Tarro {
 		      bucket.height = 64;
 	   }
 	   public void dañar() {
-		  vidas--;
 		  herido = true;
 		  tiempoHerido=tiempoHeridoMax;
 		  sonidoHerido.play();
 	   }
+
 	   public void dibujar(SpriteBatch batch) {
 		 if (!herido)  
 		   batch.draw(bucketImage, bucket.x, bucket.y);
@@ -90,5 +95,7 @@ public class Tarro {
    public boolean estaHerido() {
 	   return herido;
    }
+
+   public int getVidas() { return GameSessionManager.getInstance().getVidas(); }
 	   
 }

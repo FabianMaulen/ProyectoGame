@@ -41,7 +41,8 @@ public class GotaBuena implements Gota {
 
     @Override
     public boolean alColisionar(Tarro tarro) {
-        tarro.sumarPuntos(10);
+        //tarro.sumarPuntos(10);
+        GameSessionManager.getInstance().sumaPuntos(10);
         dropSound.play();
         return true;
     }
