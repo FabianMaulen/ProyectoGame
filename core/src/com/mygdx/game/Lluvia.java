@@ -47,7 +47,7 @@ public class Lluvia {
         }
 
         if (MathUtils.random(1, 10) < 5) {
-            // Gota mala (puedes modificarla igual que GotaBuena para usar Strategy)
+            // Gota mala (puedes modificarla ig ual que GotaBuena para usar Strategy)
             gotas.add(new GotaMala(texturaGotaMala, x, estrategia));
         } else {
             // Gota buena con estrategia
@@ -58,7 +58,7 @@ public class Lluvia {
     }
 
     public boolean actualizarMovimiento(Tarro tarro) {
-        if (TimeUtils.nanoTime() - lastDropTime > 100000000) crearGotaDeLluvia();
+        if (TimeUtils.nanoTime() - lastDropTime > 200000000) crearGotaDeLluvia();
 
         for (int i = gotas.size - 1; i >= 0; i--) {
             Gota gota = gotas.get(i);

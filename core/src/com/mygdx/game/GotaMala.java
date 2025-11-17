@@ -20,7 +20,7 @@ public class GotaMala implements Gota {
 
     @Override
     public void actualizar(float delta) {
-        area.y -= 300 * delta;
+        movimiento.mover(area, delta);
     }
 
     @Override
