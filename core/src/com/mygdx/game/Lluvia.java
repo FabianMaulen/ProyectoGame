@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Lluvia {
-    private Array<Gota> gotas;
+    private Array<GotaAbstracta> gotas;
     private long lastDropTime;
 
     private Texture texturaGotaBuena;
@@ -26,7 +26,7 @@ public class Lluvia {
     }
 
     public void crear() {
-        gotas = new Array<Gota>();
+        gotas = new Array<GotaAbstracta>();
         crearGotaDeLluvia();
 
         rainMusic.setLooping(true);
@@ -36,10 +36,9 @@ public class Lluvia {
     private void crearGotaDeLluvia() {
         float x = MathUtils.random(0, 800 - 64);
 
-        // Elegimos una estrategia de movimiento aleatoria
+
         MovimientoStrategy estrategia;
-        int tipo = MathUtils.random(0, 3); // 0 a 3 → cuatro tipos de movimiento
-        switch (tipo) {
+        int tipo = MathUtils.random(0, 3);
             case 0: estrategia = new MovimientoVertical(); break;
             case 1: estrategia = new MovimientoDiagonal(); break;
             case 2: estrategia = new MovimientoZigZag(); break;
@@ -47,10 +46,8 @@ public class Lluvia {
         }
 
         if (MathUtils.random(1, 10) < 5) {
-            // Gota mala (puedes modificarla ig ual que GotaBuena para usar Strategy)
             gotas.add(new GotaMala(texturaGotaMala, x, estrategia));
         } else {
-            // Gota buena con estrategia
             gotas.add(new GotaBuena(texturaGotaBuena, dropSound, x, estrategia));
         }
 
@@ -61,28 +58,21 @@ public class Lluvia {
         if (TimeUtils.nanoTime() - lastDropTime > 200000000) crearGotaDeLluvia();
 
         for (int i = gotas.size - 1; i >= 0; i--) {
-            Gota gota = gotas.get(i);
+            // Ya es GotaAbstracta, no necesita casting
+            GotaAbstracta gota = gotas.get(i);
             gota.actualizar(Gdx.graphics.getDeltaTime());
 
-            if (gota.estaFueraDePantalla()) {
-                gotas.removeIndex(i);
-                continue;
-            }
+            boolean debeSerRemovida = gota.procesar(tarro);
 
-            if (gota.getArea().overlaps(tarro.getArea())) {
-                boolean juegoContinua = gota.alColisionar(tarro);
+            if (debeSerRemovida) {
                 gotas.removeIndex(i);
-
-                if (!juegoContinua) {
-                    return false;
-                }
             }
         }
         return true;
     }
 
     public void actualizarDibujoLluvia(SpriteBatch batch) {
-        for (Gota gota : gotas) {
+        for (GotaAbstracta gota : gotas) {
             gota.dibujar(batch);
         }
     }

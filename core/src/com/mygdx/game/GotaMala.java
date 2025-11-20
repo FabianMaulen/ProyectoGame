@@ -1,11 +1,10 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class GotaMala implements Gota {
+public class GotaMala extends GotaAbstracta {
 
     private Texture textura;
     private Rectangle area;
@@ -17,15 +16,23 @@ public class GotaMala implements Gota {
         this.movimiento = movimientoInicial;
     }
 
-
     @Override
     public void actualizar(float delta) {
         movimiento.mover(area, delta);
     }
 
     @Override
+    protected void aplicarEfecto(Tarro tarro) {
+        boolean juegoContinua = !GameSessionManager.getInstance().perderVida();
+
+        if (juegoContinua) {
+            tarro.dañar();
+        }
+    }
+
+    @Override
     public void dibujar(SpriteBatch batch) {
-        batch.draw(textura, area.x, area.y,96,96);
+        batch.draw(textura, area.x, area.y, 96, 96);
     }
 
     @Override
@@ -36,16 +43,5 @@ public class GotaMala implements Gota {
     @Override
     public boolean estaFueraDePantalla() {
         return area.y + area.height < 0;
-    }
-
-    @Override
-    public boolean alColisionar(Tarro tarro) {
-        //tarro.dañar();
-        boolean juegoContinua = !GameSessionManager.getInstance().perderVida();
-
-        if(juegoContinua){
-            tarro.dañar();
-        }
-        return juegoContinua;
     }
 }

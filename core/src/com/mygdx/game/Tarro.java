@@ -50,8 +50,8 @@ public class Tarro {
 		      bucket = new Rectangle();
 		      bucket.x = 800 / 2 - 64 / 2;
 		      bucket.y = 20;
-		      bucket.width = 64;
-		      bucket.height = 64;
+		      bucket.width = 50;
+		      bucket.height = 50;
 	   }
 	   public void dañar() {
 		  herido = true;
