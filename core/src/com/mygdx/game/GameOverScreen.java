@@ -18,7 +18,7 @@ public class GameOverScreen extends PantallaBase {
 
     @Override
     public void show() {
-        // Puedes agregar lógica de sonido o animación si lo deseas
+
     }
 
     @Override

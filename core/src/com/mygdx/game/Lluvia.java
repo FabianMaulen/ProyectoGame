@@ -39,6 +39,7 @@ public class Lluvia {
 
         MovimientoStrategy estrategia;
         int tipo = MathUtils.random(0, 3);
+        switch (tipo){
             case 0: estrategia = new MovimientoVertical(); break;
             case 1: estrategia = new MovimientoDiagonal(); break;
             case 2: estrategia = new MovimientoZigZag(); break;
@@ -58,7 +59,6 @@ public class Lluvia {
         if (TimeUtils.nanoTime() - lastDropTime > 200000000) crearGotaDeLluvia();
 
         for (int i = gotas.size - 1; i >= 0; i--) {
-            // Ya es GotaAbstracta, no necesita casting
             GotaAbstracta gota = gotas.get(i);
             gota.actualizar(Gdx.graphics.getDeltaTime());
 
@@ -67,9 +67,13 @@ public class Lluvia {
             if (debeSerRemovida) {
                 gotas.removeIndex(i);
             }
+            if (GameSessionManager.getInstance().getVidas() <= 0) {
+                return false; // detener el juego si ya no quedan vidas
+            }
         }
         return true;
     }
+
 
     public void actualizarDibujoLluvia(SpriteBatch batch) {
         for (GotaAbstracta gota : gotas) {
